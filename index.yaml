@@ -3,6 +3,18 @@ entries:
   nifi-registry:
   - apiVersion: v2
     appVersion: 1.27.0
+    created: "2025-11-21T05:21:39.995713887Z"
+    description: A Helm chart for nifi-registry
+    digest: 4f571ddfc4bd327459d1a0cccdb6fb6cbec864a5fcccf6e82854480190b72497
+    maintainers:
+    - name: toronz
+    name: nifi-registry
+    type: application
+    urls:
+    - https://github.com/ToroNZ/nifi-charts/releases/download/nifi-registry-1.0.1/nifi-registry-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.27.0
     created: "2025-11-21T04:51:45.656369453Z"
     description: A Helm chart for nifi-registry
     digest: a8dbcee8b4460980a2086eb39510d52191cf7ee05769db5637a0c6d3c7e6efd6
@@ -13,4 +25,4 @@ entries:
     urls:
     - https://github.com/ToroNZ/nifi-charts/releases/download/nifi-registry-1.0.0/nifi-registry-1.0.0.tgz
     version: 1.0.0
-generated: "2025-11-21T04:51:45.656376957Z"
+generated: "2025-11-21T05:21:39.995721882Z"
