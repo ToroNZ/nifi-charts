@@ -1,0 +1,17 @@
+{{- if and .Values.https.cert.enabled .Values.https.cert.additionalCAs }}
+{{- range $name, $cert := .Values.https.cert.additionalCAs }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nifi-registry.fullname" $ }}-ca-{{ $name }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "nifi-registry.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: additional-ca
+data:
+  ca.crt: |
+{{- $cert | nindent 4 }}
+{{- end }}
+{{- end }}
+

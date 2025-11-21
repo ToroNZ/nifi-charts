@@ -95,6 +95,22 @@ https:
         memory: 128Mi
     certDuration: 87660h
     caDuration: 87660h
+    # Additional CA certificates to trust
+    # Each entry creates a directory under /opt/nifi-registry/nifi-registry-current/tls/<name>/ca.crt
+    # The key name becomes the alias in the truststore (must be a valid Kubernetes resource name)
+    # These certificates will be automatically imported into the truststore at pod startup
+    # Example:
+    # additionalCAs:
+    #   my-private-ca: |
+    #     -----BEGIN CERTIFICATE-----
+    #     MIIBvjCCAWOgAwIBAgIQO4lUJYgwXhECmzGc0J9gzTAKBggqhkjOPQQDAjAw
+    #     ...
+    #     -----END CERTIFICATE-----
+    #   another-ca: |
+    #     -----BEGIN CERTIFICATE-----
+    #     ...
+    #     -----END CERTIFICATE-----
+    additionalCAs: {}
 
 auth:
   enabled: false

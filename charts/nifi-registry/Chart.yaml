@@ -4,5 +4,5 @@ description: A Helm chart for nifi-registry
 type: application
 maintainers:
   - name: toronz
-version: 1.0.2
+version: 1.0.3
 appVersion: "2.6.0"

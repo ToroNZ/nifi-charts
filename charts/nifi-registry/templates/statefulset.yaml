@@ -255,6 +255,13 @@ spec:
               mountPath: /opt/nifi-registry/nifi-registry-current/run
             - name: {{ include "nifi-registry.fullname" . }}-0
               mountPath: /opt/nifi-registry/nifi-registry-current/tls/cert-manager
+            {{- if .Values.https.cert.additionalCAs }}
+            {{- range $name, $cert := .Values.https.cert.additionalCAs }}
+            - name: {{ include "nifi-registry.fullname" $ }}-ca-{{ $name }}
+              mountPath: /opt/nifi-registry/nifi-registry-current/tls/{{ $name }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
             {{ end }}
             {{- if .Values.flow.git.enabled }}
             {{- if .Values.flow.git.ssh.secret }}
@@ -279,6 +286,14 @@ spec:
         - name: {{ template "nifi-registry.fullname" $ }}-0
           secret:
             secretName: {{ include "nifi-registry.fullname" $ }}-0
+        {{- if .Values.https.cert.additionalCAs }}
+        {{- range $name, $cert := .Values.https.cert.additionalCAs }}
+        - name: {{ include "nifi-registry.fullname" $ }}-ca-{{ $name }}
+          configMap:
+            name: {{ include "nifi-registry.fullname" $ }}-ca-{{ $name }}
+            defaultMode: 0444
+        {{- end }}
+        {{- end }}
         {{ end }}
         {{- if .Values.flow.git.ssh.secret }}
         - name: ssh-key-secret
