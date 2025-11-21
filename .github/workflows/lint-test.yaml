@@ -13,18 +13,6 @@ jobs:
       matrix:
         # Latest k8s versions. There's no series-based tag, nor is there a latest tag.
         k8s:
-          - 1.21.14
-          - 1.22.17
-          - 1.23.17
-          - 1.24.17
-          - 1.25.16
-          - 1.26.15
-          - 1.27.16
-          - 1.28.15
-          - 1.29.14
-          - 1.30.13
-          - 1.31.9
-          - 1.32.5
           - 1.33.2
     steps:
       - name: Checkout

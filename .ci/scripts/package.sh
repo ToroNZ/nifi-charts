@@ -16,7 +16,7 @@ while read -r line; do
   helm package -u -d ${TASK_ROOT}/charts/charts ${CHART[0]}
 
   cd ${TASK_ROOT}/charts
-  helm repo index --url https://improwised.github.io/charts .
+  helm repo index --url https://toronz.github.io/charts .
   git add .
   git commit -m "bump: ${CHART[0]/charts\//}:- ${CHART[1]} → ${CHART[2]}"
 

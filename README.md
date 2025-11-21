@@ -1,11 +1,11 @@
 # charts
-Helm charts maintained by Improwised Technologies
+Helm charts maintained by someone
 ## Usage
 
 Add helm repo
 
 ```bash
-helm repo add improwised https://improwised.github.io/charts/
+helm repo add toronz https://toronz.github.io/charts/
 ```
 
 ## Add charts
@@ -21,7 +21,7 @@ helm package <chart-directory-name>
 3. Index added chart
 
 ```bash
-helm repo index --url https://improwised.github.io/charts .
+helm repo index --url https://toronz.github.io/charts .
 ```
 
 ### In case we are not adding the chart to the chart directory with the PR and are pushing it directly to releases:
