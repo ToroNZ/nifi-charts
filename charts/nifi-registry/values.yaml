@@ -28,6 +28,7 @@ serviceAccount:
 
 ## initContainers fo volume
 initContainers:
+  enabled: false
   alpine:
     image: alpine
     tag: 3.6
