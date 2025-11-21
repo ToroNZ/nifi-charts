@@ -5,7 +5,7 @@ Helm charts maintained by someone
 Add helm repo
 
 ```bash
-helm repo add toronz https://toronz.github.io/charts/
+helm repo add toronz https://toronz.github.io/nifi-charts/
 ```
 
 ## Add charts
