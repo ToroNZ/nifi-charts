@@ -1,4 +1,6 @@
 {{ if .Values.https.cert.enabled }}
+{{- $useExistingIssuer := and .Values.https.cert.existingIssuer .Values.https.cert.existingIssuer.name }}
+{{- if not $useExistingIssuer }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -39,6 +41,19 @@ metadata:
 spec:
   ca:
     secretName: {{ template "nifi-registry.fullname" $ }}-ca
+{{- end }}
+{{- $issuerName := "" }}
+{{- $issuerKind := "" }}
+{{- $issuerGroup := "" }}
+{{- if $useExistingIssuer }}
+{{- $issuerName = .Values.https.cert.existingIssuer.name }}
+{{- $issuerKind = default "Issuer" .Values.https.cert.existingIssuer.kind }}
+{{- $issuerGroup = default "cert-manager.io" .Values.https.cert.existingIssuer.group }}
+{{- else }}
+{{- $issuerName = printf "%s-ca" (template "nifi-registry.fullname" $) }}
+{{- $issuerKind = "Issuer" }}
+{{- $issuerGroup = "cert-manager.io" }}
+{{- end }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -63,8 +78,11 @@ spec:
     - server auth
     - client auth
   issuerRef:
-    name: {{ template "nifi-registry.fullname" $ }}-ca
-    kind: Issuer
+    name: {{ $issuerName }}
+    kind: {{ $issuerKind }}
+{{- if eq $issuerKind "Issuer" }}
+    group: {{ $issuerGroup }}
+{{- end }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -92,6 +110,9 @@ spec:
 {{ toYaml $.Values.https.cert.additionalDnsNames | indent 4 }}
     - localhost
   issuerRef:
-    name: {{ template "nifi-registry.fullname" $ }}-ca
-    kind: Issuer
+    name: {{ $issuerName }}
+    kind: {{ $issuerKind }}
+{{- if eq $issuerKind "Issuer" }}
+    group: {{ $issuerGroup }}
+{{- end }}
 {{ end }}

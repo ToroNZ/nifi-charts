@@ -77,6 +77,17 @@ https:
   host: "0.0.0.0"
   cert:
     enabled: false
+    # Use an existing cert-manager issuer instead of creating a new one
+    # This allows sharing a CA with other applications (e.g., NiFi) in the same namespace
+    # When using an existing Issuer, it must be in the same namespace as this release
+    # When using ClusterIssuer, it can be referenced from any namespace
+    # existingIssuer:
+    #   # Name of the existing issuer to use
+    #   name: ""
+    #   # Kind of issuer: "Issuer" or "ClusterIssuer" (default: "Issuer")
+    #   kind: "Issuer"
+    #   # API group (default: "cert-manager.io")
+    #   group: "cert-manager.io"
     clientCommonName: "Initial Administrator"
     clusterDomain: cluster.local
     keystorePasswd: changeme
