@@ -50,7 +50,7 @@ spec:
 {{- $issuerKind = default "Issuer" .Values.https.cert.existingIssuer.kind }}
 {{- $issuerGroup = default "cert-manager.io" .Values.https.cert.existingIssuer.group }}
 {{- else }}
-{{- $issuerName = printf "%s-ca" (template "nifi-registry.fullname" $) }}
+{{- $issuerName = printf "%s-ca" (include "nifi-registry.fullname" $) }}
 {{- $issuerKind = "Issuer" }}
 {{- $issuerGroup = "cert-manager.io" }}
 {{- end }}
