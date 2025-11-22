@@ -152,6 +152,12 @@ data:
     xmlstarlet ed --inplace --update "//configuration/logger/appender-ref[@ref='EVENTS_FILE']/@ref" -v CONSOLE "${NIFI_REGISTRY_HOME}/conf/logback.xml"
     xmlstarlet ed --inplace --update "//configuration/logger/appender-ref[@ref='APP_FILE']/@ref" -v CONSOLE "${NIFI_REGISTRY_HOME}/conf/logback.xml"
     xmlstarlet ed --inplace --update "//configuration/root/appender-ref[@ref='APP_FILE']/@ref" -v CONSOLE "${NIFI_REGISTRY_HOME}/conf/logback.xml"
+
+    # Set log level based on environment variable (default INFO, can be DEBUG, TRACE, etc.)
+    LOG_LEVEL="${NIFI_REGISTRY_LOG_LEVEL:-INFO}"
+    xmlstarlet ed --inplace --update "//configuration/root/@level" -v "${LOG_LEVEL}" "${NIFI_REGISTRY_HOME}/conf/logback.xml"
+    xmlstarlet ed --inplace --update "//configuration/logger[@name='org.apache.nifi.registry']/@level" -v "${LOG_LEVEL}" "${NIFI_REGISTRY_HOME}/conf/logback.xml"
+    xmlstarlet ed --inplace --update "//configuration/logger[@name='org.springframework.security']/@level" -v "${LOG_LEVEL}" "${NIFI_REGISTRY_HOME}/conf/logback.xml"
     cd /opt/nifi-registry/nifi-registry-current/
     mkdir -p ./flow_storage
 
@@ -164,7 +170,7 @@ data:
     [ ! -z "${SSL_IDENTITY_MAPPING_VALUE_DN}" ] && prop_enable 'nifi.registry.security.identity.mapping.value.dn'   "${SSL_IDENTITY_MAPPING_VALUE_DN}"
 
     exec ${NIFI_REGISTRY_HOME}/bin/nifi-registry.sh run
-  {{ if .Values.flow.git.ssh.config }}
+  {{- if .Values.flow.git.ssh.config }}
   config: |
       {{- if contains "\n" .Values.flow.git.ssh.config }}
           {{- range $value := .Values.flow.git.ssh.config | splitList "\n" }}
@@ -173,8 +179,8 @@ data:
       {{- else }}
           {{ .Values.flow.git.ssh.config }}
       {{- end }}
-  {{ end }}
-  {{ if .Values.flow.git.ssh.known_hosts }}
+  {{- end }}
+  {{- if .Values.flow.git.ssh.known_hosts }}
   known_hosts: |
       {{- if contains "\n" .Values.flow.git.ssh.known_hosts }}
           {{- range $value := .Values.flow.git.ssh.known_hosts | splitList "\n" }}
@@ -183,8 +189,8 @@ data:
       {{- else }}
           {{ .Values.flow.git.ssh.known_hosts }}
       {{- end }}
-  {{ end }}
-  {{ if .Values.flow.git.config.enabled }}
-  gitconfig: | 
+  {{- end }}
+  {{- if .Values.flow.git.config.enabled }}
+  gitconfig: |
     {{ .Values.flowProvider.git.config.data }}
-  {{ end }}
+  {{- end }}

@@ -93,6 +93,8 @@ spec:
                 name: {{ .Values.bundle.s3.accessSecret.name }}
           {{- end }}
           env:
+            - name: NIFI_REGISTRY_LOG_LEVEL
+              value: {{ .Values.logging.level | default "INFO" }}
           {{- if .Values.bundle.s3.enabled }}
             - name: NIFI_REGISTRY_BUNDLE_PROVIDER
               value: s3
